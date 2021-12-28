@@ -3,15 +3,7 @@
 
 	<!-- 작성 폼 css -->
 	<link th:href="@{../css/writeArticleStyle.css}" rel="stylesheet" />
-<!-- <style>
-#noticeCheck {
-	display: inline;
-}
 
-.noticeCheck {
-	display: none;
-}
-</style> -->
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
@@ -19,14 +11,15 @@
 			<div class="row mt-3 mb-5">
 
 				<div id="write_board_page" class="write-board-style">
-					<form enctype="multipart/form-data" th:object="${articleVO}"
-						th:field="${article}" th:action="@{/insertArticle}" method="post">
+					<form enctype="multipart/form-data" th:object="${articleForm}"
+						  th:action="@{/articles/addArticle}" method="post">
 
 						<!-- 게시판 설정 -->
 						<div id="selectBoard" class="select-board-style">
 							<select id="boardList" th:field="*{boardNo}" required>
+								<option value="" >게시판을 선택하세요.</option>
 								<option th:each="board: ${boardList}"
-									th:value="${board.boardNo}" th:text="${board.boardName}">
+									th:value="${board.getBoardNo()}" th:text="${board.getBoardName()}">
 								</option>
 							</select>
 						</div>
@@ -48,8 +41,7 @@
 									<select id="displayNotice" th:if="${gradeNo}==1"
 										th:field="*{displayNotice}">
 										<option value="0" selected>미설정</option>
-										<option value="1">게시판</option>
-										<option value="2">전체</option>
+										<option value="1">공지 설정</option>
 									</select>
 								</div>
 							</div>
@@ -58,26 +50,26 @@
 									placeholder="제목" maxlength="100" required></textarea>
 							</div>
 
-							<div id="import_bth" class="write-area-style">
-								<!-- 첨부파일 -->
-								<!-- <label class="write-file-style" for="write-file-upload"><i
-									class="fas fa-file-upload fa-2x"></i></label> -->
-								<input type="file" id="write-file-upload"
-									name="importAttacheFile" />
+<!--							<div id="import_bth" class="write-area-style">-->
+<!--								&lt;!&ndash; 첨부파일 &ndash;&gt;-->
+<!--								&lt;!&ndash; <label class="write-file-style" for="write-file-upload"><i-->
+<!--									class="fas fa-file-upload fa-2x"></i></label> &ndash;&gt;-->
+<!--								<input type="file" id="write-file-upload"-->
+<!--									name="importAttacheFile" />-->
 
-								<!-- 이미지 파일 첨부 -->
-								<!-- <label class="write-image-style" for="write-file-upload"><i
-									class="far fa-file-image fa-2x"></i></label>  -->
-								<input type="file" id="write-file-upload" name="imageFiles"
-									multiple="multiple" /> <a name="selectbtnimage"
-									id="selectimage"></a>
-								<!-- <img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> -->
-							</div>
+<!--								&lt;!&ndash; 이미지 파일 첨부 &ndash;&gt;-->
+<!--								&lt;!&ndash; <label class="write-image-style" for="write-file-upload"><i-->
+<!--									class="far fa-file-image fa-2x"></i></label>  &ndash;&gt;-->
+<!--								<input type="file" id="write-file-upload" name="imageFiles"-->
+<!--									multiple="multiple" /> <a name="selectbtnimage"-->
+<!--									id="selectimage"></a>-->
+<!--								&lt;!&ndash; <img src="/importfile.png" board='0'onclick="document.all.selectFile.click();document.all.selectbtnimage.value=document.all.selectFile.value" /> &ndash;&gt;-->
+<!--							</div>-->
 
-							<div id="in_content" class="write-content-style">
-								<textarea id="content" th:field="*{content}" placeholder="내용"
-									required rows="1" cols="71"></textarea>
-							</div>
+<!--							<div id="in_content" class="write-content-style">-->
+<!--								<textarea id="content" th:field="*{content}" placeholder="내용"-->
+<!--									required rows="1" cols="71"></textarea>-->
+<!--							</div>-->
 
 							<div class="write-btn-style">
 								<input type="button" value="취소" onclick="history.back(-1)">

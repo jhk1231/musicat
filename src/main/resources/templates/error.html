@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+
+Error : <br>
+[[${exception.getMessage()}]] <br>
+
+<ul>
+    <th:block th:each="stack : ${exception.getStackTrace()}">
+        <li th:text="${stack}"></li>
+    </th:block>
+</ul>
+</body>
+</html>

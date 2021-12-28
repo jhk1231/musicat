@@ -1,0 +1,383 @@
+<html>
+<div class="row mt-3 mb-5">
+    <div class="detailArticle-content-style">
+        <h3>게시글 세부 조회</h3>
+        <div class="detailArticle-table-style">
+            <h1>
+                <input type="hidden" id="login_no" th:value="${loginMemberNo}">
+                <input type="hidden" id="member_no"
+                       th:value="${article.memberNo}"> <input type="hidden"
+                                                              id="article_no" th:value="${article.no}"> <input
+                    type="hidden" id="board_no" th:value="${article.boardNo}">
+            </h1>
+            <form id="detailContent" th:object="${article}" name="article">
+                <table width=100%>
+                    <colgroup>
+                        <col width="15%">
+                        <col width="35%">
+                        <col width="15%">
+                        <col width="*">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>제목</th>
+                        <td th:text="${article.subject}" th:field="*{subject}"></td>
+                        <th>조회수</th>
+                        <td th:text="${article.viewcount}" th:field="*{viewcount}"></td>
+                    </tr>
+                    <tr>
+                        <th>작성자</th>
+                        <td th:text="${article.nickname}" th:field="*{nickname}"></td>
+                        <th>작성일</th>
+                        <td th:text="${article.writeDate}"></td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td th:text="${article.content}" th:field="*{content}"></td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>첨부파일</th>
+                        <td th:if="${article.attacheFile == null}">첨부된 파일이 없습니다.</td>
+                        <td th:unless="${article.attacheFile == null}"><a
+                                th:href="|/attach/${article.getAttacheFile().getNo()}|"
+                                th:text="${article.getAttacheFile().getSystemFileName()}|"></a>
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr th:if="${article.fileList != null}">
+
+                        <td>
+                            <!--이미지 파일들--> <img th:each="imageFile : ${article.fileList}"
+                                                th:src="|/images/${imageFile.getSystemFileName()}|"
+                                                width="200" height="200"/>
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2">
+                            <div class="detailArticle-btn-style">
+                                <div class="detailArticle-function-style">
+                                    <input type="button"
+                                           th:onclick="|location.href='@{/writeArticleForm}'|"
+                                           value="글쓰기"/> <input type="button"
+                                                                th:onclick="|location.href='@{/nListArticle/{boardNo}(boardNo=${article.boardNo})}'|"
+                                                                value="목록"/>
+                                </div>
+                                <div id="like_area" class="detailArticle-like-style">
+                                    <div th:if="${article.likeCheck eq 0}">
+                                        <button type="button" id="add_like_btn" value="추천"/>
+                                        <i class="far fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div th:unless="${article.likeCheck eq 0}">
+                                        <button type="button" id="del_like_btn">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+
+                                    <div>
+                                        <strong th:text="${article.likecount}"></strong>
+                                    </div>
+                                </div>
+                        </td>
+        </div>
+
+        <!--본인만 가능-->
+        <div class="detail-userCheck-style"
+             th:if="${loginMemberNo == article.memberNo}"
+             style="float: right;">
+            <td>
+                <div class="detail-userBtn-style">
+                    <input type="button"
+                           th:onclick="|location.href='@{/updateArticleForm/{articleNo}(articleNo=${article.no})}'|"
+                           value="수정"/> <input type="button"
+                                               id="remove_article_btn" value="삭제"/>
+                </div>
+            </td>
+        </div>
+
+        </tr>
+
+        </tbody>
+        </table>
+        </form>
+    </div>
+    <!-- 댓글 -->
+
+
+    <div id="writeReplyForm" class="detailArticle-reply-style">
+						<textarea id="write_content" name="write_content" rwos="10"
+                                  cols="75" placeholder="댓글을 입력해주세요."></textarea>
+
+        <button type="button" id="write_reply_btn">등록</button>
+    </div>
+
+    <div id="replys">
+        <div class="reply_list"
+             th:each="reply : ${article.getReplyList()}">
+            <table th:id="${reply.getNo()}">
+                <colgroup>
+                    <col width="15%">
+                    <col width="35%">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th>내용</th>
+                    <td class="Content" th:text="${reply.content}"></td>
+                </tr>
+                <tr>
+                    <th>닉네임</th>
+                    <td th:text="${reply.nickname}"></td>
+                </tr>
+                <tr>
+                    <th>작성 날짜</th>
+                    <td th:text="${reply.writeDate}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+
+                <tr th:if="${loginMemberNo == reply.memberNo}">
+                    <td colspan="2"><input type="button"
+                                           class="modify_Reply_Form_Btn" value="수정"/> <input
+                            type="button" class="remove_Reply_Btn" value="삭제"/></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- 수정 폼 -->
+    <div id="modify_reply_form" style="display: none;"
+         class="detailArticle-replyModify-style">
+        <div id="writeReplyForm">
+            <input type="hidden" id="no"/>
+            <textarea id="reply_content" rwos="5" cols="50" placeholder=""></textarea>
+            <button class="modify_cancle">취소</button>
+            <button class="modify_reply_btn">수정</button>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+</main>
+</div>
+<script th:src="@{../js/jquery-3.6.0.min.js}"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#remove_article_btn').on('click', function () {
+            const boardNo = $("#board_no").val();
+            const articleNo = $("#article_no").val();
+            location.href = '/removeArticle/' + articleNo + '/' + boardNo;
+        })
+
+        /*-------------------댓글 ------------------ */
+        const getAjax = function (url, no, content) {
+            // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        no: no,
+                        content: content,
+                        articleNo: $("#article_no").val()
+
+                    },
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (e) {
+                        reject(e);
+                    }
+                });
+            });
+        }
+
+        const removeReply = function (url, no) {
+            // resolve, reject는 자바스크립트에서 지원하는 콜백 함수이다.
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        no: no,
+                        articleNo: $("#article_no").val()
+                    },
+                    success: function (data) {
+                        resolve(data);
+                    },
+                    error: function (e) {
+                        console.trace();
+                        reject(e);
+                    }
+                });
+            });
+        }
+
+        async function requestProcess(url, no, content) {
+            try {
+                console.log("rP 접속");
+                let replyList = null;
+                if (content == null || content == '' || typeof content == "undefined") {
+                    replyList = await removeReply(url, no);
+                } else {
+                    console.log("GetAjAx 전");
+                    replyList = await getAjax(url, no, content);
+                    console.log("GetAjAx 후");
+                }
+
+                $('#replys').html("");
+                let htmlStr = [];
+
+                console.log(htmlStr);
+                for (let i = 0; i < replyList.length; i++) {
+                    htmlStr.push('<div class="reply_list">');
+                    htmlStr.push('<table id=' + replyList[i].no + '>');
+                    htmlStr.push('<tbody>');
+                    htmlStr.push('<tr>');
+                    htmlStr.push('<td class="Content">' + replyList[i].content + "</td>");
+                    htmlStr.push('<tr>');
+                    htmlStr.push('<td>' + replyList[i].nickname + "</td>");
+                    htmlStr.push('</tr>');
+                    htmlStr.push('<tr>');
+                    htmlStr.push('<td>' + replyList[i].writeDate + "</td>");
+                    htmlStr.push('</tr>');
+                    htmlStr.push('</tbody>');
+                    htmlStr.push('<tfoot>');
+                    if (replyList[i].memberNo == $('#login_no').val()) {
+                        htmlStr.push("<tr>");
+                        htmlStr.push('<td><input type="button" class="modify_Reply_Form_Btn" value="수정" />&nbsp;');
+                        htmlStr.push('<input type="button" class="remove_Reply_Btn" value="삭제" /></td>');
+                        htmlStr.push('</tr>');
+                    }
+                    htmlStr.push('</tfoot>');
+                    htmlStr.push('</table>');
+                    htmlStr.push('</div>');
+                }
+                console.log(htmlStr);
+                $('#replys').html(htmlStr.join(""));
+
+            } catch (error) {
+                console.trace();
+                console.log("error : ", error);
+            }
+        }
+
+        console.log();
+
+        //댓글 작성
+        $('#write_reply_btn').on('click', function () {
+            const articleNo = $("#article_no").val();
+            const content = $('#write_content').val();
+            console.log('ajax전');
+            requestProcess('/insertReply', articleNo, content);
+            $("#write_content").val(""); // textarea 비우기
+            console.log('ajax후');
+        });
+
+
+        //댓글 수정폼
+        $(document).on('click', '.modify_Reply_Form_Btn', function () {
+            const no = $(this).parents('table').attr('id');
+            $('#modify_reply_form').insertAfter('#' + no);
+            const content = $('#' + no).find('.Content').text();
+            console.log('content:', content);
+            $('#reply_content[placeholder]').val(content);
+            $('#no').val(no);
+            $('#modify_reply_form').show();
+            $('#' + no).hide();
+        });
+
+
+        //댓글 수정폼 닫기
+        $('.modify_cancle').on('click', function () {
+            const no = $('#no').val();
+            console.log('cancelModifyFormNo:', no);
+            $('#' + no).show();
+            $('#modify_reply_form').hide();
+            $('#modify_reply_form').insertAfter('#writeReplyForm');
+        });
+
+        //댓글 수정
+        $('.modify_reply_btn').on('click', function () {
+            // 댓글No
+            const no = $('#no').val();
+            console.log('modifyActionNo:', no);
+            const content = $('#' + no).parent('div').find('#reply_content').val();
+            console.log('modifyReplyContent:', content);
+            requestProcess('/modifyReply', no, content);
+            $('#modify_reply_form').insertAfter('#writeReplyForm');
+            $('#modify_reply_form').hide();
+            $('#modify_reply_form').html();
+        });
+
+
+        //댓글 삭제
+        $(document).on('click', '.remove_Reply_Btn', function () {
+            const no = $(this).parents('table').attr('id');
+            console.log('remove', no)
+            requestProcess('/removeReply', no);
+        });
+
+
+        $(document).on('click', '#add_like_btn', function () {
+            $.ajax({
+                url: '/addLike',
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "articleNo": $("#article_no").val()
+                }),
+                success: function (data) {
+                    let count = data.totalcount; // 총 추천 수
+                    //let count = JSON.parse(data).totalCount;
+                    // alert(count);
+                    let likecount = [];
+                    likecount += "<button type='button' id='del_like_btn'><i class='fas fa-heart'></i> </button>";
+                    likecount += "<strong>" + count + "</strong>";
+                    $('#like_area').html("");
+                    $('#like_area').html(likecount);
+                },
+                error: function (e) {
+                    console.trace();
+                    reject(e);
+                }
+            });
+        });
+
+
+        $(document).on('click', '#del_like_btn', function () {
+            $.ajax({
+                url: "/delLike",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    "articleNo": $("#article_no").val()
+                }),
+                success: function (data) {
+                    let count = data.totalcount; // 총 추천 수
+                    let likecount = [];
+                    likecount += "<button type='button' id='add_like_btn'><i class='far fa-heart'></i></button>";
+                    likecount += "<strong>" + count + "</strong>";
+                    $('#like_area').html("");
+                    $('#like_area').html(likecount);
+                },
+                error: function (e) {
+                    console.trace();
+                    reject(e);
+                }
+            });
+        })
+
+
+    });
+</script>
+</html>

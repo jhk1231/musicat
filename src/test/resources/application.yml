@@ -1,13 +1,13 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/musicat
-    username: scott
-    password: Tiger_1234
+    username: root
+    password: mymysql
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     properties:
       hibernate:
         #        show_sql: true #sysout으로 찍는다

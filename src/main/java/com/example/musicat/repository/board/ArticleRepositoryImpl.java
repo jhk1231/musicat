@@ -1,6 +1,7 @@
 package com.example.musicat.repository.board;
 
 import com.example.musicat.domain.board.Article;
+import com.example.musicat.domain.board.Board;
 import com.example.musicat.repository.BaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,10 @@ public class ArticleRepositoryImpl implements BaseRepository {
     public void update(Object data) {}
 
     @Override
-    public void remove(Integer id) {}
+    public void remove(Integer id) {
+        Article removeArticle = em.find(Article.class, id);
+        em.remove(removeArticle);
+    }
 
     @Override
     public Object findOne(Integer id) {
@@ -41,9 +45,9 @@ public class ArticleRepositoryImpl implements BaseRepository {
     /**
      * 게시판 별 목록 조회
      */
-    public List<Article> findByBoardNo(int boardNo) {
-        return em.createQuery("select a from Article a where a.boardNo = :boardNo", Article.class)
-                .setParameter("boardNo", boardNo)
+    public List<Article> findByBoardNo(Board board) {
+        return em.createQuery("select a from Article a where a.board = :boardNo", Article.class)
+                .setParameter("boardNo", board)
                 .getResultList();
     }
 
