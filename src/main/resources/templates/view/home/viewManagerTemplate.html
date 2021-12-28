@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/default_layout}">
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
 
 <th:block layout:fragment="head">
-	<title>반려동물 카페</title>
-	<link rel="shortcut icon" th:href="@{/images/favicon.ico}">
-	<link th:href="@{../css/style.css}" rel="stylesheet" />
-	<link th:href="@{../css/theme_styles.css}" rel="stylesheet" />
-	<link th:href="@{../css/DatabasesStyle.css}" rel="stylesheet" />
+    <title>반려동물 카페</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}">
+    <link th:href="@{../css/style.css}" rel="stylesheet"/>
+    <link th:href="@{../css/theme_styles.css}" rel="stylesheet"/>
+    <link th:href="@{../css/DatabasesStyle.css}" rel="stylesheet"/>
 
-	<link th:href="@{../css/homeContentsStyle.css}" rel="stylesheet" />
+    <link th:href="@{../css/homeContentsStyle.css}" rel="stylesheet"/>
 
-	<link th:href="@{../css/StatisticsStyle.css}" rel="stylesheet" />
+    <link th:href="@{../css/StatisticsStyle.css}" rel="stylesheet"/>
 
-	<link th:href="@{../css/CategoryStyle.css}" rel="stylesheet" />
-	
-	
+    <link th:href="@{../css/CategoryStyle.css}" rel="stylesheet"/>
 
-	<link rel="stylesheet"
-		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-		crossorigin="anonymous">
-	<!-- 차트 링크 -->
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-	<script th:src="@{../js/all.min.js}" th:crossorigin="anonymous"></script>
+<!--    <link rel="stylesheet"-->
+<!--          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"-->
+<!--          crossorigin="anonymous">-->
+<!--    &lt;!&ndash; 차트 링크 &ndash;&gt;-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>-->
+
+    <script th:src="@{../js/all.min.js}" th:crossorigin="anonymous"></script>
 </th:block>
 
 <body class="sb-nav-fixed">
 
-	<!-- Header -->
-	<th:block layout:fragment="viewFrameHeader"
-		th:include="@{/fragments/viewFrameHeader}"></th:block>
+<!-- Header -->
+<th:block layout:fragment="viewFrameHeader"
+          th:include="/fragments/viewFrameHeader"></th:block>
 
-	<div id="layoutSidenav">
-		<!-- Nav -->
-		<th:block layout:fragment="nav" th:include="@{/fragments/managerNav}"></th:block>
-		<!-- Content -->
-		<th:block layout:fragment="viewMainContent"
-			th:include="@{${managerContent}}"></th:block>
-	</div>
+<div id="layoutSidenav">
+    <!-- Nav -->
+    <th:block layout:fragment="nav" th:include="/fragments/managerNav"></th:block>
+    <h1 th:text="@{${managerContent}}"></h1>
+    <!-- Content -->
+    <th:block layout:fragment="viewMainContent"
+              th:include="@{${managerContent}}"></th:block>
+</div>
 
-	<!-- footer -->
-	<th:block layout:fragment="viewFrameFooter"
-		th:include="@{/fragments/viewFrameFooter}"></th:block>
+<!-- footer -->
+<th:block layout:fragment="viewFrameFooter"
+          th:include="/fragments/viewFrameFooter"></th:block>
 
-	<!-- Script -->
-	<script th:src="@{../js/bootstrap.bundle.min.js}"
-		th:crossorigin="anonymous"></script>
-	<script th:src="@{../js/scripts.js}"></script>
-	<script th:src="@{../js/Chart.min.js}" th:crossorigin="anonymous"></script>
-	<script th:src="@{../js/chart-area-demo.js}"></script>
-	<script th:src="@{../js/chart-bar-demo.js}"></script>
-	<script th:src="@{../js/simple-datatables@latest.js}"
-		th:crossorigin="anonymous"></script>
-	<script th:src="@{../js/datatables-simple-demo.js}"></script>
+<!-- Script -->
+<script th:src="@{../js/bootstrap.bundle.min.js}"
+        th:crossorigin="anonymous"></script>
+<script th:src="@{../js/scripts.js}"></script>
+<script th:src="@{../js/simple-datatables@latest.js}"
+        th:crossorigin="anonymous"></script>
+<script th:src="@{../js/datatables-simple-demo.js}"></script>
 
 
 </body>

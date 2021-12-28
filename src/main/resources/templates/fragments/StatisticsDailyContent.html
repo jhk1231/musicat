@@ -1,5 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://thymeleaf.org">
+<script th:src="@{../js/Chart.min.js}" th:crossorigin="anonymous"></script>
+<script th:src="@{../js/chart-area-demo.js}"></script>
+<script th:src="@{../js/chart-bar-demo.js}"></script>
+
 <div id="layoutSidenav_content">
 	<main>
 		<div class="container-fluid px-4">
@@ -12,9 +16,8 @@
 						</colgroup>
 
 						<tr>
-							<!-- <td th:onclick="|location.href='@{/manager/daily}'|"> -->
-							<td th:onclick="|location.href='@{/petopia-manager/daily}'|">일일 통계</td>
-							<td th:onclick="|location.href='@{/petopia-manager/total}'|">총 통계</td>
+							<td th:onclick="|location.href='@{daily}'|">일일 통계</td>
+							<td th:onclick="|location.href='@{total}'|">총 통계</td>
 						</tr>
 					</table>
 				</div>
@@ -36,11 +39,21 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="daily : ${dailyList}">
-								<td th:text="${daily.dailyDate}"></td>
-								<td th:text="${daily.dailyArticle}"></td>
-								<td th:text="${daily.dailyVisits}"></td>
-							</tr>
+						<tr>
+							<td>2021-12-28</td>
+							<td>3</td>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>2021-12-28</td>
+							<td>3</td>
+							<td>5</td>
+						</tr>
+<!--							<tr th:each="daily : ${dailyList}">-->
+<!--								<td th:text="${daily.dailyDate}"></td>-->
+<!--								<td th:text="${daily.dailyArticle}"></td>-->
+<!--								<td th:text="${daily.dailyVisits}"></td>-->
+<!--							</tr>-->
 						</tbody>
 					</table>
 				</div>
@@ -60,29 +73,29 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-<!-- 차트 -->
+
 <script>
 	const colors = [ "red", "yellow", "blue", "#c3e6cb", "#dc3545", "#6c757d" ];
-	var chBar = document.getElementById("myChart");
-	var chartData = {
-		labels : [ "[[ ${dailyList[2].dailyDate} ]]",
-				"[[ ${dailyList[1].dailyDate} ]]",
-				"[[ ${dailyList[0].dailyDate} ]]", ],
+	let chBar = document.getElementById("myChart");
+	let chartData = {
+		labels : [ "2021-12-28",
+				"2021-12-27",
+				"2021-12-26", ],
 		datasets : [
 				{
-					data : [ "[[ ${dailyList[2].dailyArticle} ]]",
-							"[[ ${dailyList[1].dailyArticle} ]]",
-							"[[ ${dailyList[0].dailyArticle} ]]", ],
+					data : [ "3",
+							"4",
+							"5", ],
 					backgroundColor : colors[0],
 				},
 				{
-					data : [ "[[ ${dailyList[2].dailyVisits} ]]",
-							"[[ ${dailyList[1].dailyVisits} ]]",
-							"[[ ${dailyList[0].dailyVisits} ]]", ],
+					data : [ "2",
+							"10",
+							"5", ],
 					backgroundColor : colors[1],
 				}, ],
 	};
-	var myChart = new Chart(chBar, {
+	let myChart = new Chart(chBar, {
 		// 챠트 종류를 선택
 		type : "bar", // 챠트를 그릴 데이타
 		data : chartData, // 옵션
@@ -94,3 +107,4 @@
 	});
 </script>
 </html>
+
