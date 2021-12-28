@@ -17,6 +17,6 @@ public interface BaseRepository<T> {
     /** 수정 */
     public void update(T data);
     /** 삭제 */
-    public void remove(T data);
+    public void remove(Integer id);
 
 }
