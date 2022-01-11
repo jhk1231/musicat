@@ -38,11 +38,7 @@ spring:
           ssl:
             enable: true
             trust: smtp.naver.com
-
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+#  servlet:
 #    multipart:
 #      max-file-size: 10MB
 #      max-request-size: 10MB

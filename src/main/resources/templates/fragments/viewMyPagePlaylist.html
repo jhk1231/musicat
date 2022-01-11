@@ -1,5 +1,5 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://thymeleaf.org">
 
 <link th:href="@{/css/myPageStyle.css}" rel="stylesheet"/>
 <link th:href="@{/css/myPagePlaylist.css}" rel="stylesheet"/>
@@ -14,30 +14,24 @@
                     </div>
                     <div class="myPage-top-profile">
                         <span>NickName</span>
-                        <button onclick="location.href='/ChangePwd'" th:if = "${session.principal.gradeNo} != 4 and ${session.principal.no} == ${member.getNo()}">비밀번호 변경</button>
-                        <button onclick="" th:if = "${session.principal.gradeNo} != 4 and ${session.principal.no} != ${member.getNo()}">Follow</button>
+                        <button onclick="location.href='/ChangePwd'" th:if = "${session.loginUser.gradeNo} != 4 and ${session.loginUser.no} == ${member.getNo()}">비밀번호 변경</button>
+                        <button onclick="" th:if = "${session.loginUser.gradeNo} != 4 and ${session.loginUser.no} != ${member.getNo()}">Follow</button>
                     </div>
                 </div>
                 <div class="mt-4 mb-4 myPage-nav">
-                    <a th:href="@{'/myPage/Playlist/' + ${member.getNo()}}">Playlist</a>
-                    <a th:href="@{'/myPage/Board/' + ${member.getNo()}}">글</a>
-                    <a th:href="@{'/myPage/Reply/' + ${member.getNo()}}">댓글</a>
-                    <span th:if="${session.loginUser.no} == ${member.getNo()}"><a th:href="@{'/myPage/Like/' + ${member.getNo()}}">좋아요</a></span>
-                </div>
-                <div th:if="${session.principal.no} == ${member.getNo()}">
-                    <form method="get" th:action="|/addPlaylistForm/${member.getNo()}|">
-                        <button type="submit">추가</button>
-                    </form>
+                    <a href="/myPage/Playlist/1">Playlist</a>
+                    <a href="/myPage/Board/1">글</a>
+                    <a href="/myPage/Reply/1">댓글</a>
+                    <a href="/myPage/Like/1">좋아요</a>
                 </div>
                 <div class="myPage-content">
-                    <div class="myPage-content-left" th:each="playlist : ${playlists}" th:object="${playlist}">
+                    <div class="myPage-content-left">
                         <div class="myPage-content-left-playlist">
                             <div class="myPage-content-left-playlist-img">
-                                <a th:href="|/myPage/Playlist/${member.getNo()}/*{id}|">
+                                <a href="/myPage/Playlist/1/1">
                                     <img src="/images/main-1.png">
                                 </a>
                             </div>
-                            <input type="hidden" id="id_no" th:value="*{id}">
                             <div class="myPage-content-left-playlist-table">
                                 <table>
                                     <tbody>
@@ -63,14 +57,80 @@
                                 </table>
                                 <div class="myPage-content-left-playlist-btn">
                                     <button>전체 재생</button>
-                                    <form th:action="|/changePlaylistForm/*{id}|" method="get">
-                                        <button type="submit">편집...</button>
-                                    </form>
-                                    <form th:action="|/deleteplaylist/*{memberNo}/*{id}|" method="POST">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button id="delete-Btn">삭제</button>
-                                    </form>
-
+                                    <button onclick="location.href='/myPage/Playlist/1'">편집...</button>
+                                    <button>삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myPage-content-left-playlist">
+                            <div class="myPage-content-left-playlist-img">
+                                <a href="/myPage/Playlist/1">
+                                    <img src="/images/main-1.png">
+                                </a>
+                            </div>
+                            <div class="myPage-content-left-playlist-table">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="myPage-content-left-playlist-btn">
+                                    <button>전체 재생</button>
+                                    <button onclick="location.href='/myPage/Playlist/1'">편집...</button>
+                                    <button>삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="myPage-content-left-playlist">
+                            <div class="myPage-content-left-playlist-img">
+                                <a href="/myPage/Playlist/1">
+                                    <img src="/images/main-1.png">
+                                </a>
+                            </div>
+                            <div class="myPage-content-left-playlist-table">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>ArtistName</td>
+                                        <td>SongName</td>
+                                        <td>PlayTime</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="myPage-content-left-playlist-btn">
+                                    <button>전체 재생</button>
+                                    <button onclick="location.href='/myPage/Playlist/1'">편집...</button>
+                                    <button>삭제</button>
                                 </div>
                             </div>
                         </div>
@@ -106,3 +166,4 @@
 </div>
 </html>
 
+<script th:src="@{../js/jquery-3.6.0.min.js}"></script>

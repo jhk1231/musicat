@@ -4,7 +4,6 @@ import java.lang.reflect.Member;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -18,23 +17,14 @@ import javax.servlet.http.HttpSession;
 import com.example.musicat.controller.form.JoinForm;
 import com.example.musicat.domain.board.*;
 import com.example.musicat.domain.member.FollowVO;
-import com.example.musicat.domain.member.GradeVO;
-import com.example.musicat.domain.music.Music;
-import com.example.musicat.domain.music.Playlist;
-import com.example.musicat.mapper.member.GradeMapper;
-import com.example.musicat.security.MemberContext;
-
-import com.example.musicat.domain.board.BestArticleVO;
 
 import com.example.musicat.security.MemberAccount;
 import com.example.musicat.service.board.BoardService;
 import com.example.musicat.service.board.ReplyService;
 import com.example.musicat.service.member.FollowService;
 import com.example.musicat.service.member.GradeService;
-import com.example.musicat.service.music.MusicApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -88,10 +78,9 @@ public class HomeController {
     @Autowired
     private FollowService followService;
 
-    @Autowired private MusicApiService musicApiService;
-  
     @Autowired
     private static AuthenticationManager authenticationManager;
+
 
 
     @GetMapping("/")
@@ -197,13 +186,11 @@ public class HomeController {
     public String myPage(Model model, @PathVariable int userNo) {
         MemberVO member = new MemberVO();
         FollowVO follow = new FollowVO();
-        List<Playlist> playlists = new ArrayList<>();
 
         try {
             member = memberService.retrieveMemberByManager(userNo);
             follow.setFollowing(followService.countFollowing(userNo));
             follow.setFollowed(followService.countFollowed(userNo));
-            playlists = musicApiService.showPlaylist(userNo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -214,8 +201,6 @@ public class HomeController {
         model.addAttribute("categoryVo", categoryVo);
         model.addAttribute("member", member);
         model.addAttribute("follow", follow);
-        model.addAttribute("playlists", playlists);
-        log.info("playlists : " + playlists);
 
         model.addAttribute("HomeContent", "fragments/viewMyPagePlaylist");
         return "view/home/viewHomeTemplate";
@@ -223,12 +208,10 @@ public class HomeController {
     }
 
     @GetMapping("/myPage/Playlist/{userNo}/{playlistNo}")
-    public String myPagePlaylistDetail(Model model, @PathVariable(name = "playlistNo") int playlistNo, @PathVariable(name = "userNo") int userNo) {
+    public String myPagePlaylistDetail(Model model, @PathVariable String playlistNo, @PathVariable int userNo) {
         MemberVO member = new MemberVO();
-        List<Music> musics = new ArrayList<>();
         try {
             member = memberService.retrieveMemberByManager(userNo);
-            musics = musicApiService.showDetailPlaylist(playlistNo);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -239,8 +222,6 @@ public class HomeController {
         CategoryVO categoryVo = new CategoryVO();
         model.addAttribute("categoryVo", categoryVo);
         model.addAttribute("member", member);
-        model.addAttribute("musics", musics);
-
         model.addAttribute("HomeContent", "fragments/viewMyPagePlaylistDetail");
         return "view/home/viewHomeTemplate";
 
@@ -333,24 +314,9 @@ public class HomeController {
     }
 
 
-    // 플레이리스트 추가 폼 요청
-    @GetMapping("/addPlaylistForm/{memberNo}")
-    public String addPlaylistForm(Model model, @PathVariable("memberNo") int memberNo) {
-        model.addAttribute("memberNo", memberNo);
-        return "view/etc/createPlaylist";
-    }
-
     @GetMapping("/test")
     public String test(){
         return "view/board/mrtest";
     }
 
-    // 플레이리스트 수정 폼 요청
-    @GetMapping("/changePlaylistForm/{id}")
-    public String changePlaylist(Model model, @PathVariable("id") int id) {
-        Playlist playlist = musicApiService.getOnePlaylist(id);
-        log.info("playlist : " + playlist.getPlaylistImage().getId());
-        model.addAttribute("playlist", playlist);
-        return "view/etc/changePlaylist";
-    }
 }
