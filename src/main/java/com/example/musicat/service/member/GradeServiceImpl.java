@@ -32,7 +32,7 @@ public class GradeServiceImpl implements GradeService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public ArrayList<GradeVO> retrieveGradeList() throws Exception {
+	public ArrayList<GradeVO> retrieveGradeList() {
 		return this.gradeMapper.selectGradeList();
 	}
 

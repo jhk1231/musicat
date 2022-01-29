@@ -12,6 +12,4 @@ public class CreateBoardVO {
 	private List<GradeVO> gradeList;
 	private List<BoardVO> boardkindList;
 	private BoardBoardGradeVO bbg;
-	
-
 }

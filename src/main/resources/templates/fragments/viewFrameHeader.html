@@ -104,7 +104,7 @@
                   <span th:text="${#authentication.principal.getMemberVo.getEmail}"></span>
             </a>
           </li>
-          <li><a class="dropdown-item" href="/notelist">쪽지함</a></li>
+<!--          <li><a class="dropdown-item" href="/notelist">쪽지함</a></li>-->
 
           <li><hr class="dropdown-divider" /></li>
 
@@ -132,7 +132,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
         ><i class="fas fa-bell fa-lg"></i>
-        <span id="noticeCount" class="position-absolute top-0 end-0">0</span></a>
+        <span id="noticeCount" class="position-absolute top-0 bg-danger rounded-circle" style="width: 25px;height: 25px; padding-left: 4px; right: -7px">0</span></a>
         <ul id = "noticeList" class="dropdown-menu dropdown-menu-end notify-ul-style"
                 aria-labelledby="navbarDropdown">
           <li>새로운 알림이 없습니다.</li>

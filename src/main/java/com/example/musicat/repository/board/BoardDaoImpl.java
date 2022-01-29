@@ -78,18 +78,10 @@ public class BoardDaoImpl implements BoardDao {
 		return this.boardMapper.selectDuplicatedBoard(boardName);
 	}
 
-	//게시판 이름 목록 조회
-//	@Override
-//	public List<BoardVO> selectBoardNameList() {
-//		return this.boardMapper.selectBoardNameList();
-//	}
-
-
 	//즐겨찾기 게시판 추가
 	@Override
 	public void insertLikeBoard(int memberNo, int boardNo) {
 		this.boardMapper.insertLikeBoard(memberNo, boardNo);
-		
 	}
 	
 	//즐겨찾기 게시판 삭제

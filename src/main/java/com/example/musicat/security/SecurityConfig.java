@@ -235,7 +235,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement() //세션 관리
                 .sessionFixation().changeSessionId() //세션 고정 보호. 세션 조작을 통한 보안 공격 방지를 위해, 인증이 필요할 때마다 새로운 세션을 만들어 쿠키 조작을 방지 (security가 기본으로 제공해주기 때문에 별도로 설정해줄 필요 없음)
-                .maximumSessions(2) //최대 세션 개수
+                .maximumSessions(4) //최대 세션 개수
                 .expiredUrl("/expiredUrl") //session 만료 시 이동 페이지
                 .maxSessionsPreventsLogin(true); //false : 이전에 로그인한 세션 만료, true : 나중에 로그인 시도하는 세션 생성 불가(로그인 불가)
 

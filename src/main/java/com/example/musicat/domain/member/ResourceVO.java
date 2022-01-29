@@ -19,5 +19,4 @@ public class ResourceVO {
     private String resourceType;
 
     private List<ResourceVO> resourceList = new ArrayList<>();
-
 }

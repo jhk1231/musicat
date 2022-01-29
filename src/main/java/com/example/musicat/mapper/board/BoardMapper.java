@@ -42,9 +42,6 @@ public interface BoardMapper {
 	//게시판이름 중복 검사
 	public Integer selectDuplicatedBoard(String boardName);
 
-	//게시판 이름 목록 조회
-	//public List<BoardVO> selectBoardNameList();
-
 	//즐겨찾기 게시판 추가
 	public void insertLikeBoard(int memberNo, int boardNo);
 	

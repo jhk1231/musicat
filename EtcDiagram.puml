@@ -2,6 +2,17 @@
 'https://plantuml.com/class-diagram
 
 ' -- etc--
+class StompChatController {
+- SimpMessagingTemplate template
+- NotifyManager notifyManager
+
++ init() : void
++ enter(ChatVO message) : void
++ message(ChatVO message) : void
++ notifyRegister(Integer no) : void
++ notifyRead(@PathVariable int notify_no) : String
+}
+
 class ChatRoomVO{
 - String roomId
 - String name
@@ -16,7 +27,7 @@ class ChatRoomVO{
 + setSessions(Set<WebSocketSession> sessions): void
 }
 
-class CharVO{
+class ChatVO{
 - String roomId
 - String writer
 - String message
@@ -51,44 +62,6 @@ class DailyStatisticsVO{
 + setInt(int dailyArticle) dailyArticle: void
 }
 
-class NoteVO{
-- int note_no
-- int member_no
-- int notecontent_no
-- int counterpart_no
-- String counterpart_nickname
-- String content
-- String sendDate
-- String readDate
-- int sendrecieve
-- boolean read = false
-
-+ NoteVO()
-+ NoteVO(int note_no, int member_no, int notecontent_no, int counterpart_no, String counterpart_nickname, String content, String sendDate,String readDate)
-+ NoteVO(int note_no, int member_no, int notecontent_no, int counterpart_no, String counterpart_nickname, String content, String sendDate,String readDate, int sendrecieve)
-+ boolean checkRead()
-+ toString()
-+ getNote_no(): int
-+ setNote_no(int note_no): void
-+ getMember_no(): int
-+ setMember_no(int member_no): void
-+ getNotecontent_no(): int
-+ setNotecontent_no(int notecontent_no): void
-+ getCounterpart_no(): int
-+ setCounterpart_no(int counterpart_no): void
-+ getCounterpart_nickname(): String
-+ setCounterpart_nickname(String counterpart_nickname): void
-+ getContent(): String
-+ setContent(String content): void
-+ getSendDate(): String
-+ setSendDate(String sendDate): void
-+ getReadDate(): String
-+ setReadDate(String readDate): void
-+ getSendrecieve(): int
-+ setSendrecieve(int sendrecieve): void
-+ getRead(): boolean
-+ setRead(boolean read): void
-}
 
 class TotalStatisticsVO{
 private int totalNo;
@@ -124,22 +97,6 @@ interface DailyStatisticsDao{
 + insertAndupdateDaily(): void
 }
 
-interface NoteDao{
-- NoteMapper mapper
-
-+ test(): NoteVO
-+ selectNoteList(int userNo, int isUserReciever, int pageSize, int startOffset): ArrayList<NoteVO>
-+ selectTotalNoteCount(int userNo, int isRecieve): int
-+ updateRead(int noteNo, int userNo): void
-+ selectNote(int noteNo): NoteVO
-+ insertNoteContent(String content) throws Exception: int
-+ insertNote_member(Map<String, Object> map) throws Exception: void
-+ insertNote_counterpart(Map<String, Object> map) throws Exception: void
-+ deleteNote(NoteVO note): void
-+ updateRecieveNoteDeleteOnNoteContent(NoteVO note): void
-+ updateSendNoteDeleteOnNoteContent(NoteVO note): void
-+ deleteNoteContent(): void
-}
 
 interface TotalStatisticsDao{
 - TotalStatisticsMapper totalMapper
@@ -150,9 +107,62 @@ interface TotalStatisticsDao{
 }
 
 ' 그려주세요
-class ChatRoomRepository{}
+class ChatRoomRepository{
+- Map<String, ChatRoomVO> chatRoomDTOMap
+
++ init() : void
++ findAllRooms() : List<ChatRoomVO>
++ findRoomById(String id) : ChatRoomVO
++ createChatRoomDTO(String name) : ChatRoomVO
++ deleteChatRoom(String chatRoomId) : String
+}
 class DailyStatisticsDaoImpl
 class NoteDaoImpl
 class TotalStatisticsDaoImpl
+
+class NotifyService {
+- NotifyDao notifyDao
+
++ insertNotify(NotifyVO notifyVo) : void
++ selectNotify(int memberNo) : List<NotifyVO>
++ updateNotifyRead(int notify_no) : void
++ selectNotifyOne(int notify_no) : NotifyVO
+}
+
+class NotifyManager{
+- SimpMessagingTemplate template;
+- Map<Integer, String> notifyMap;
+
++ init() : void
++ addToNotifyList(int memberNo, String notifyId) : void
++ deleteFromNotifyList(int memberNo) : void
++ getNotifyId(int memberNo) : String
++ addNotify(NotifyVO notifyVo) : void
++ updateNotifyRead(int notify_no) : void
++ publishNotify(int memberId) : void
++ selectNotifyOne(int notify_no) : NotifyVO
+}
+
+class NotifyDao {
+- NotifyMapper mapper
+- NotifyService notifyService
+- StompHandler stompHandler
+
++ insertNotify(NotifyVO notifyVo) : void
++ selectNotify(int member_no) : List<NotifyVO>
++ updateNotifyRead(int notify_no) : void
++ selectNotifyOne(int notify_no) : NotifyVO
+}
+
+class NotifyVO{
+- int notify_no
+- int member_no
+- String content
+- String sendDate
+- String readDate
+- String link;
+
++ NotifyVO(int member_no, String content, String link)
+}
 
 @enduml

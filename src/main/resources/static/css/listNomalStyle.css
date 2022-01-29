@@ -32,3 +32,7 @@
     text-decoration: none;
     color: black;
 }
+.grade-article-style th,
+.grade-article-style td{
+    padding: 3px;
+}

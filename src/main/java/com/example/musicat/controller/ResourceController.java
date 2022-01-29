@@ -2,8 +2,6 @@ package com.example.musicat.controller;
 
 import com.example.musicat.domain.member.GradeResourceVO;
 import com.example.musicat.domain.member.GradeVO;
-import com.example.musicat.domain.member.ResourceVO;
-import com.example.musicat.mapper.member.ResourceMapper;
 import com.example.musicat.service.member.GradeService;
 import com.example.musicat.service.member.ResourceService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +27,9 @@ public class ResourceController {
 
     //리소스 + 권한 목록 조회
     @GetMapping("/resourceManager")
-    public String resourceManager(Model model) throws Exception {
+    public String resourceManager(Model model) {
         List<GradeResourceVO> gradeResourceList = this.resourceService.retrieveGradeResourceList();
         model.addAttribute("gradeResourceList", gradeResourceList);
-
-        List<GradeVO> gradeList = this.gradeService.retrieveGradeList();
-        model.addAttribute("gradeList", gradeList);
-
-        GradeResourceVO gradeResourceVo = new GradeResourceVO();
-        model.addAttribute("gradeResourceVo", gradeResourceVo);
 
         model.addAttribute("managerContent", "/view/security/resourceManager");
 
@@ -46,14 +38,11 @@ public class ResourceController {
 
     @ResponseBody
     @PostMapping("/selectListAddResource")
-    public Map<String, Object> selectListAddResource() throws Exception {
+    public Map<String, Object> selectListAddResource() {
         Map<String, Object> map = new HashMap<>();
 
         ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
         map.put("gradeList", gradeList);
-
-        List<ResourceVO> resourceList = this.resourceService.retrieveResourceList();
-        map.put("resourceList", resourceList);
 
         return map;
     }
@@ -65,7 +54,6 @@ public class ResourceController {
 
         Map<String, Object> map = new HashMap<>();
 
-        //Map<String, Integer> duplicatedResource = resourceService.retrieveDuplicatedResource(gradeResourceVo.getResourceName(), gradeResourceVo.getGradeNo());
         Integer duplicatedResource = resourceService.retrieveDuplicatedResource(gradeResourceVo.getResourceName());
         if(duplicatedResource != null) {
             map.put("duplicated", 1);
@@ -87,14 +75,11 @@ public class ResourceController {
     @ResponseBody
     @PostMapping("/selectListModifyResource")
     public Map<String, Object> selectListModifyResource(
-            @RequestParam("gradeResourceNo") int gradeResourceNo) throws Exception {
+            @RequestParam("gradeResourceNo") int gradeResourceNo) {
         Map<String, Object> map = new HashMap<>();
 
         ArrayList<GradeVO> gradeList = this.gradeService.retrieveGradeList();
         map.put("gradeList", gradeList);
-
-        List<ResourceVO> resourceList = this.resourceService.retrieveResourceList();
-        map.put("resourceList", resourceList);
 
         GradeResourceVO oneGradeResource = this.resourceService.retrieveOneGradeResource(gradeResourceNo);
         map.put("oneGradeResource", oneGradeResource);
@@ -107,7 +92,6 @@ public class ResourceController {
     public Map<String, Object> modifyResource( @ModelAttribute("gradeResourceVo") GradeResourceVO gradeResourceVo) {
         Map<String, Object> map = new HashMap<>();
 
-        //Map<String, Integer> duplicatedResource = resourceService.retrieveDuplicatedResource(gradeResourceVo.getResourceName(), gradeResourceVo.getGradeNo());
         Integer duplicatedResource = resourceService.retrieveDuplicatedResource(gradeResourceVo.getResourceName());
         if(duplicatedResource == null) { //중복x
             map.put("duplicated", 0);
@@ -138,5 +122,4 @@ public class ResourceController {
 
         return map;
     }
-
 }

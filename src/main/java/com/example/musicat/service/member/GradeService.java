@@ -13,7 +13,7 @@ public interface GradeService {
 	Integer retrieveGradeNo(String auth);
 
 	// 등급 조회
-	ArrayList<GradeVO> retrieveGradeList() throws Exception;
+	ArrayList<GradeVO> retrieveGradeList();
 
 	// ~ 양
 	

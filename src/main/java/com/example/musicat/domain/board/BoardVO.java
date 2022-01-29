@@ -17,14 +17,22 @@ public class BoardVO {
     private int categoryNo;
 
     private int boardNo;
-
     private String boardName;
-    private int boardkind; //게시판종류  / TINYINT / NotNull, 0, 1
+    private int boardkind;
     private String boardkindName;
 
+    //카테고리, 게시판 목록 조회 시 사용
+    public BoardVO(int boardNo, String boardName, int boardkind) {
+        this.boardNo = boardNo;
+        this.boardName = boardName;
+        this.boardkind = boardkind;
+    }
 
-    private int favoriteNo;
-    private int no; //회원 넘버
+
+
+
+    //private int favoriteNo;
+    //private int no; //회원 넘버
 
     //
 //    public BoardVO(int categoryNo, int boardNo, String boardName, int boardkind) {
@@ -35,13 +43,9 @@ public class BoardVO {
 //    }
     //
 
-    public BoardVO(int boardNo, String boardName, int boardkind) {
-        this.boardNo = boardNo;
-        this.boardName = boardName;
-        this.boardkind = boardkind;
-    }
 
-    private List<BoardVO> boardGradeList = new ArrayList<>();
+
+    //private List<BoardVO> boardGradeList = new ArrayList<>();
 
 
 }

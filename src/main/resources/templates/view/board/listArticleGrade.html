@@ -24,18 +24,19 @@
                     <input type="hidden" id="memberNo" name="memberNo" th:value="${memberNo}">
 
                     <!-- 등업신청하기 -->
-                    <div><input th:if="${#authorization.expr('isAuthenticated()')}" type="button" id="write_btn" name="write_btn" value="등업 신청하기" /></div>
+                    <div><input th:if="${#authorization.expr('isAuthenticated()')}" type="button" id="write_btn" class="mx-3 my-3" name="write_btn" value="등업 신청하기" /></div>
                     <div class="articleVOS card-body">
                         <input type="hidden" id="boardNo" th:value="${boardNo}">
                         <input type="hidden" id="allSearchKeyword" th:value="${keyword}">
                         <input type="hidden" id="allSearchContent" th:value="${content}">
 
-                        <form id="write_grade_article_form" action="/articles/insert/grade" method="post">
-                            <table id="write_form_table" style="display: none">
+                        <form id="write_grade_article_form" action="/articles/insert/grade" method="post" style="display: none">
+                            <div class="dropdown-divider"></div>
+                            <table id="write_form_table" class="w-100" >
                                 <thead>
                                 <th>신청자</th>
                                 <th>신청등급</th>
-                                <th>현재등급</th>
+                                <th class="ps-3">현재등급</th>
                                 <th>방문수</th>
                                 <th>게시글수</th>
                                 <th>댓글수</th>
@@ -47,7 +48,8 @@
                         </form>
 
                         <form id="grade_insert_from" method="GET" action="/update/member/grade">
-                        <table id="list_table">
+                            <div class="dropdown-divider"></div>
+                        <table id="list_table" class="w-100">
                             <thead>
                             <th>선 택</th>
                             <th>신청자</th>
@@ -60,16 +62,21 @@
                             <th>신청일</th>
                             </thead>
                             <tbody id="article_list">
+                            <tr>
+                                <td colspan="9">
+                                    <div class="dropdown-divider"></div>
+                                </td>
+                            </tr>
                             <input type="hidden" id="result" name="result" value="">
                             <div th:each="article : ${articles}">
-                                <tr>
+                                <tr >
                                     <td>
                                         <input type="hidden" id="articleNo" class="articleNo" name="articleNo" th:value="${article.no}">
                                         <input type="hidden" class="prograde" th:value="${article.proGrade}">
                                         <input type="hidden" class="gradeMemberNo"  th:value="${article.memberNo}">
-                                        <input type="radio" name="selectMember">
+                                        <input class="ms-3" type="radio" name="selectMember">
                                     </td>
-                                    <td rowspan="2" th:text="${article.nickname}">신청자</td>
+                                    <td th:text="${article.nickname}">신청자</td>
                                     <td th:text="${article.proGrade}">>신청등급</td>
                                     <td th:text="${article.nowGrade}">현재등급</td>
                                     <td th:text="${article.visits}">방문수</td>
@@ -79,13 +86,23 @@
                                     <td th:text="${article.writedate}">신청일</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" th:text="${article.content}">신청내용</td>
+                                    <td colspan="9" class="pt-3">
+                                        <div class="dropdown-divider"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="pb-3 ps-2" th:text="${article.content}">신청내용</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="pt-3">
+                                        <div class="dropdown-divider"></div>
+                                    </td>
                                 </tr>
                             </div>
                             </tbody>
                         </table>
                         <!--관리자만 가능-->
-                        <div sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <div class="my-3" sec:authorize="hasAnyRole('ROLE_ADMIN')">
                             <select id="result-choice" name="resultChoice">
                                 <option value="0">거절</option>
                                 <option value="1" selected>수락</option>
@@ -119,6 +136,7 @@
                 success: function (data) {
                     var htmlStr = "";
                     htmlStr += '<input type="hidden" name="memberNo" value="' + memberNo + '">';
+                    htmlStr += '<tr><td colspan="9"><div class="dropdown-divider"></div></td></tr>';
                     htmlStr += '<tr>';
                     htmlStr += '<td><input type="text" name="nickname" value="' + data.nickname + '"></td>';
                     htmlStr += '<td>';
@@ -127,16 +145,18 @@
                     htmlStr += '<option value="MANAGER">매니저</option>';
                     htmlStr += '</select>';
                     htmlStr += '</td>';
-                    htmlStr += '<td><input type="text" name="nowGrade" value="' +  data.grade + '"/>';
+                    htmlStr += '<td class="ps-3"><input type="text" name="nowGrade" value="' +  data.grade + '"/>';
                     htmlStr += '<td><input type="text" name="visits" value="' +  data.visits + '"/>';
                     htmlStr += '<td><input type="text" name="docs" value="' +  data.docs + '"/>';
                     htmlStr += '<td><input type="text" name="comms" value="' +  data.comms + '"/>';
                     htmlStr += '<td><input type="text" name="regdate" value="' +  data.regDate + '"/>';
                     htmlStr += '</tr>';
+                    htmlStr += '<tr><td colspan="9"><div class="dropdown-divider"></div></td></tr>';
                     htmlStr += '<tr><td colspan="7"><input type="textarea" class="w-100" name="content" placeholder="내용을 입력하세요."/></td></tr>';
+                    htmlStr += '<tr><td colspan="9"><div class="dropdown-divider"></div></td></tr>';
                     htmlStr += '<input type="button" id="grade_write_btn" value="신청">';
                     $('#write-form-tbody').html(htmlStr);
-                    $('#write_form_table').show();
+                    $('#write_grade_article_form').show();
                 },
                 error: function (e) {
                     console.trace();

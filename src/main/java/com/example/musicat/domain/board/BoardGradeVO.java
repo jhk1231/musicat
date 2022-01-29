@@ -37,10 +37,10 @@ public class BoardGradeVO {
 	//
 
 
-	public BoardGradeVO(int readGrade, int writeGrade) {
-		this.readGrade = readGrade;
-		this.writeGrade = writeGrade;
-	}
+//	public BoardGradeVO(int readGrade, int writeGrade) {
+//		this.readGrade = readGrade;
+//		this.writeGrade = writeGrade;
+//	}
 
 	
 	

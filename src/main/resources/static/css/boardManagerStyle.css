@@ -29,11 +29,13 @@
 }
 
 .boardManager-btn-style div:first-child button {
-	background-color: #ccffff;
+	background-color: #5c03ad;
+	color: white;
 }
 
 .boardManager-btn-style div:last-child button {
-	background-color: #fffed9;
+	background-color: #e4caff;
+	color: black;
 }
 
 .categoryList-content-style {
@@ -59,7 +61,7 @@
 
 .list-category-style,
 .list-board-style{
-	border-radius: 10px;
+	border-radius: 4px;
 
 }
 
@@ -78,13 +80,15 @@
 
 .list-category-style {
 	font-size: 16px;
-	background-color: #ccffff;
+	background-color: #5c03ad;
+	color: white;
 	margin: 5px 0;
 	padding: 5px 10px;
 }
 
 .list-board-style {
-	background-color: #fffed9;
+	background-color: #e4caff;
+	color: black;
 	padding: 3px 10px;
 	margin-bottom: 3px;
 }
@@ -122,7 +126,7 @@
 }
 
 .categoryList-blank-style table tr td:first-child {
-	background-color: #caffce;
+	background-color: #e4caff;
 	padding: 10px;
 	text-align: center;
 	vertical-align: middle;

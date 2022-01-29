@@ -60,8 +60,6 @@ public class BoardController {
 		model.addAttribute("categoryBoardList", categoryList);
 		model.addAttribute("managerContent", "/view/board/boardManager");
 
-		log.info("boardManager--------" + categoryList.toString());
-		
 		//카테고리 추가
 		CategoryVO categoryVo = new CategoryVO();
 		model.addAttribute("categoryVo", categoryVo);
@@ -98,7 +96,7 @@ public class BoardController {
 	//카테고리 수정 페이지
 	@ResponseBody
 	@PostMapping("/selectOneCategory")
-	public CategoryVO selectOneCategory(@RequestBody HashMap<String, Object> map) throws Exception {
+	public CategoryVO selectOneCategory(@RequestBody HashMap<String, Object> map) {
 
 		CategoryVO cVO = new CategoryVO();
 
@@ -132,7 +130,6 @@ public class BoardController {
 				map.put("result", 1); //다른 카테고리면 저장x
 			}
 		}
-
 		return map;
 	}
 
@@ -150,7 +147,6 @@ public class BoardController {
 			map.put("result", 1);
 		} else {
 			map.put("result", 0);
-
 			this.categoryService.removeCategory(categoryNo);
 		}
 		return map;
@@ -160,7 +156,7 @@ public class BoardController {
 	//게시판 추가 페이지 드롭박스 목록
 	@ResponseBody
 	@PostMapping("/selectListAdd")
-	public CreateBoardVO selectListAdd() throws Exception {
+	public CreateBoardVO selectListAdd() {
 		CreateBoardVO cbVO = new CreateBoardVO();
 		//카테고리 목록
 		ArrayList<CategoryVO> categoryList = this.categoryService.retrieveCategoryList();
@@ -172,8 +168,6 @@ public class BoardController {
 		cbVO.setCategoryList(categoryList);
 		cbVO.setGradeList(gradeList);
 		cbVO.setBoardkindList(boardkindList);
-
-		log.info("/selectListAdd");
 
 		return cbVO;
 	}
@@ -213,7 +207,7 @@ public class BoardController {
 	//게시판 수정 페이지
 	@ResponseBody
 	@PostMapping("/selectListModify")
-	public CreateBoardVO selectListModify(@RequestBody HashMap<String, Object> map ) throws Exception {
+	public CreateBoardVO selectListModify(@RequestBody HashMap<String, Object> map ) {
 
 		CreateBoardVO cbVO = new CreateBoardVO();
 		//카테고리 목록
@@ -271,7 +265,7 @@ public class BoardController {
 	}
 
 	//게시판 수정 sub
-	public void modifyBoardSub(BoardVO boardVo, BoardGradeVO boardGradeVo,
+	private void modifyBoardSub(BoardVO boardVo, BoardGradeVO boardGradeVo,
 							   int boardNo, int categoryNo, String boardName, int writeGrade, int readGrade, int boardkind) {
 		boardVo.setBoardNo(boardNo);
 		boardVo.setCategoryNo(categoryNo);
@@ -307,7 +301,7 @@ public class BoardController {
 
 	// 게시판 목록 조회
 	@GetMapping("/board/{boardNo}/articles")
-	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo, // @RequestParam("memberNo") int memberNo,
+	public String selectAllNomalArticle(@PathVariable("boardNo") int boardNo,
 										Model model) {
 		// create
 		BoardBoardGradeVO bbgVO = this.boardService.retrieveOneBoard(boardNo);
@@ -396,13 +390,6 @@ public class BoardController {
 		}
 	}
 
-//	@ResponseBody
-//	@GetMapping("/board/paging")
-//	public List<ArticleVO> pagingBoardList(@RequestParam("movePage") int movePage,
-//										   @RequestParam("boardNo") int boardNo){
-//		List<ArticleVO> articles = this.articleService.selectBoardList(boardNo, movePage);
-//		return articles;
-//	}
 
 	@ResponseBody
 	@GetMapping("/board/paging")
@@ -476,24 +463,19 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/likeBoard")
 	public Map<String, Integer> likeBoard(@RequestParam("memberNo") int memberNo, @RequestParam("boardNo") int boardNo) {
-		log.info("memberNo : " + memberNo + " boardNo : " + boardNo);
 
 		Map<String, Integer> map = new HashMap<>();
 
 		//즐찾 한 게시판인지 여부
 		int likeboard = this.boardService.retrieveLikeBoard(memberNo, boardNo);
-		log.info("즐찾에 있나요? : ", likeboard);
 
-		if (likeboard == 0) { //즐찾 안된 게시판이면
+		if (likeboard == 0) {
 			map.put("result", 0);
 			this.boardService.registerLikeBoard(memberNo, boardNo);
-		} else { //즐찾게시판면
+		} else {
 			map.put("result", 1);
 			this.boardService.removeLikeBoard(memberNo, boardNo);
 		}
-
-		log.info("result {} : ", map.get("result").toString());
-
 		return map;
 	}
 

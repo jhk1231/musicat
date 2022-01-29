@@ -69,6 +69,9 @@ public class TemplateModelFactory {
             log.info(musics.toString());
         }
 
+        if(musics == null){
+            return model;
+        }
         try {
             List<Map<String, Object>> newMusicInfos = new ArrayList<Map<String, Object>>();
             for (int i = 0; i < musics.size(); ++i) {

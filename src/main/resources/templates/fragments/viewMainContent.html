@@ -18,7 +18,7 @@
                                 <th:block th:each="bestArticle : ${bestArticles}">
                                     <div class="swiper-slide">
                                         <a th:href="|/articles/${bestArticle.articleNo}|">
-                                            <img style="width:500px; height:350px; object-fit: cover;" th:src="${bestArticle.systemFileName}">
+                                            <img style="width:500px; height:450px; object-fit: cover;" th:src="${bestArticle.systemFileName}">
                                         </a>
                                     </div>
                                 </th:block>

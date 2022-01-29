@@ -29,6 +29,7 @@ public class CategoryVO {
     private List<CategoryVO> categoryList = new ArrayList<>();
     private List<BoardVO> boardList = new ArrayList<>();
 
+    //카테고리, 게시판 목록 조회 시 사용
     public void addBoardList(BoardVO board) {
         this.boardList.add(board);
     }

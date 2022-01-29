@@ -142,7 +142,7 @@
                             <div class="dropdown-divider"></div>
 
                             <div class="detailArticle-function-style">
-                                <div id="like_area" class="detailArticle-like-style">
+                                <div id="like_area" class="detailArticle-like-style" th:if="${#authorization.expr('isAuthenticated()')}">
                                     <div th:if="${article.likeCheck eq 0}">
                                         <button type='button' id='add_like_btn'><i class='far fa-heart fa-lg'></i></button>
                                     </div>

@@ -189,6 +189,8 @@ public class HomeController {
 
 
         model.addAttribute("HomeContent", "fragments/viewMyPagePlaylist");
+
+        templateModelFactory.setCurPlaylistModel(model);
         return "view/home/viewHomeTemplate";
 
     }
@@ -262,6 +264,8 @@ public class HomeController {
 	      model.addAttribute("checkFollow", checkFollow);
         log.info("대체 뭐가 문젠데 Board " + member.getNo());
         model.addAttribute("HomeContent", "fragments/viewMyPageBoard");
+
+        templateModelFactory.setCurPlaylistModel(model);
         return "view/home/viewHomeTemplate";
 
     }
@@ -303,6 +307,8 @@ public class HomeController {
         model.addAttribute("checkFollow", checkFollow);
 
         model.addAttribute("HomeContent", "fragments/viewMyPageReply");
+
+        templateModelFactory.setCurPlaylistModel(model);
         return "view/home/viewHomeTemplate";
 
     }
@@ -339,6 +345,8 @@ public class HomeController {
         model.addAttribute("follow", follow);
 	      model.addAttribute("checkFollow", checkFollow);
         model.addAttribute("HomeContent", "fragments/viewMyPageLike");
+
+        templateModelFactory.setCurPlaylistModel(model);
         return "view/home/viewHomeTemplate";
 
     }

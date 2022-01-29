@@ -1,6 +1,40 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charSet="UTF-8"/>
+    <title>Musicat-ChangePlayList</title>
 
+    <link th:href="@{/css/theme_styles.css}" rel="stylesheet"/>
+
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+    />
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        form {
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+
+        .profile-table-style {
+        }
+
+        .profile-imgFile-style {
+            height: 50px;
+        }
+
+        .profile-imgFile-style span:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-primary">
+<button class="btn" onclick="history.back()"><span class="material-icons md-36">arrow_circle_left</span></button>
 <div>Playlist Title</div>
 <form th:action="|/addplaylist|" enctype="multipart/form-data" method="post">
     <input type="hidden" name="id" th:value="${memberNo}">
@@ -10,6 +44,7 @@
     <button type="submit">Save</button>
 </form>
 <button type="button" onchange="history.back()">취소</button>
+</body>
 </html>
 
 <script th:src="@{/js/jquery.min.js}"></script>
@@ -21,7 +56,10 @@
     });
 
     function changePlaylistImage(f) {
-        if (f.fil-3.6.0es && f.files[0]) {
+        if (f.fil - 3.6.0
+        es && f.files[0]
+    )
+        {
             var reader = new FileReader();
             var ext = String(f.files[0].type).toLowerCase();
             console.log(ext);

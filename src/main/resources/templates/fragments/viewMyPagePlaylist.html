@@ -9,7 +9,7 @@
             <div class="row mt-3 mb-5">
                 <div class="myPage-top">
                     <div class="myPage-top-image">
-                        <!--                        <a href="/profile"><img th:src="|/profileImage/${member.getNo()}|"></a>-->
+                        <!-- <a href="/profile"><img th:src="|/profileImage/${member.getNo()}|"></a> -->
                         <button style="border: none;outline: none; background-color: transparent;" onclick="openProfile()" th:if="${#authorization.expr('isAuthenticated()')} AND ${#authentication.principal.getMemberVo.getNo} == ${member.getNo()}">
                             <img th:src="|/profileImage/${member.getNo()}|"/>
                         </button>
@@ -69,14 +69,14 @@
                 </div>
 
                 <div class="myPage-btn-style" th:if="${#authorization.expr('isAuthenticated()')} AND ${#authentication.principal.getMemberVo.getNo} == ${member.getNo()}">
-                    <form class="me-3" method="get" th:action="|/addPlaylistForm/${member.getNo()}|">
+                    <form class="me-3" style="display: none" method="get" th:action="|/addPlaylistForm/${member.getNo()}|">
                         <button class="btn btn-primary" type="submit">추가</button>
                     </form>
                     <form
                             th:action="|/deleteplaylist/*{memberNo}/*{id}|"
                             method="POST">
                         <input type="hidden" name="_method" value="DELETE"/>
-                        <button id="class" class="btn btn-primary">삭제</button>
+                        <button id="class" class="btn btn-primary">전체 삭제</button>
                     </form>
 
                 </div>
@@ -119,7 +119,7 @@
                             <div class="myPage-content-left-playlist-btn">
                                 <button class="btn btn-primary">전체 재생</button>
                                 <form th:action="|/changePlaylistForm/*{id}|" method="get" class="mx-3">
-                                    <button class="btn btn-primary" type="submit">편집...</button>
+                                    <button class="btn btn-primary" type="submit" style="display: none">편집...</button>
                                 </form>
                                 <form th:action="|/deleteplaylist/*{memberNo}/*{id}|" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">

@@ -1,0 +1,111 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'구현
+' -------------- Dao -------------------
+ResourceDao <|.. ResourceDaoImpl
+' -------------- Service -------------------
+ResourceSerivce <|.. ResourceSerivceImpl
+
+ResourceMapper <.. ResourceDao
+
+ResourceService <.. ResourceController
+
+
+interface ResourceMapper{
+GradeResourceVO selectOneGradeResource(int gradeResourceNo);
+List<GradeResourceVO> selectGradeResourceList();
+void insertGradeResource(GradeResourceVO gradeResourceVo);
+Integer selectDuplicatedResource(String resourceName);
+void updateGradeResource(GradeResourceVO gradeResourceVo);
+void deleteGradeResource(int gradeResourceNo);
+List<ResourceVO> selectResourceList();
+}
+
+class ResourceVO{
+- int resourceNo
+- String resourceName
+- String resourceType
+- List<ResourceVO> resourceList = new ArrayList<>()
+
++ ResourceVO()
++ ResourceVO(int resourceNo, String resourceName, String resourceType, List<ResourceVO> resourceList)
++ getResourceNo(): int
++ getResourceNo(): int
++ setResourceNo(int resourceNo): void
++ getResourceName(): String
++ setResourceName(String resourceName): void
++ getResourceType(): String
++ setResourceType(String resourceType): void
++ getResourceList(): List<ResourceVO>
++ setResourceList(List<ResourceVO> resourceList): void
+}
+
+class GradeResourceVO{
+- int gradeResourceNo
+- int resourceNo
+- String resourceName
+- String resourceType
+- int gradeNo
+- String grade
+- String gradeName
+
++ GradeResourceVO()
++ GradeResourceVO(int gradeResourceNo, int resourceNo, String resourceName, String resourceType, int gradeNo, String grade, String gradeName)
++ getGradeResourceNo(): int
++ setGradeResourceNo(int gradeResourceNo): void
++ getResourceNo(): int
++ setResourceNo(int resourceNo): void
++ getResourceName(): String
++ setResourceName(String resourceName): void
++ getResourceType(): String
++ setResourceType(String resourceType): void
++ getGradeNo(): int
++ setGradeNo(int gradeNo): void
++ getGrade(): String
++ setGrade(String grade): void
++ getGradeName(): String
++ setGradeName(String gradeName): void
+}
+
+interface ResourceDao{
+- ResourceMapper resourceMapper
+
++ selectOneGradeResource(int gradeResourceNo): GradeResourceVO
++ selectGradeResourceList(): List<GradeResourceVO>
++ insertGradeResource(GradeResourceVO gradeResourceVo): void
++ selectDuplicatedResource(String resourceName): Integer
++ updateGradeResource(GradeResourceVO gradeResourceVo): void
++ deleteGradeResource(int gradeResourceNo): void
++ selectResourceList(): List<ResourceVO>
+}
+
+class ResourceDaoImpl
+
+interface ResourceService{
+- ResourceDao resourceDao
+
++ retrieveOneGradeResource(int gradeResourceNo): GradeResourceVO
++ retrieveGradeResourceList(): List<GradeResourceVO>
++ registerGradeResource(GradeResourceVO gradeResourceVo): void
++ retrieveDuplicatedResource(String resourceName): Integer
++ modifyGradeResource(GradeResourceVO gradeResourceVo): void
++ removeGradeResource(int gradeResourceNo): void
++ retrieveResourceList(): List<ResourceVO>
+}
+
+class ResourceSerivceImpl
+
+class ResourceController{
+- ResourceService resourceService
+- GradeService gradeService
+
++ resourceManager(Model model): String
++ selectListAddResource(): Map<String, Object>
++ writeResource(@ModelAttribute("gradeResourceVo") GradeResourceVO gradeResourceVo): Map<String, Object>
++ selectListModifyResource(@RequestParam("gradeResourceNo") int gradeResourceNo): Map<String, Object>
++ modifyResource( @ModelAttribute("gradeResourceVo") GradeResourceVO gradeResourceVo): Map<String, Object>
++ deleteResource(@ModelAttribute("gradeResourceVo") GradeResourceVO gradeResourceVo): Map<String, Object>
+}
+
+@enduml
